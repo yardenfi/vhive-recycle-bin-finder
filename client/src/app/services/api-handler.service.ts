@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class ApiHandlerService {
@@ -8,7 +9,7 @@ export class ApiHandlerService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getRecyclingData() {
-    return this.httpClient.get(`${this.apiUrl}/recycle-bins`);
+  getRecyclingData(): Observable<any[]> {
+    return this.httpClient.get<any[]>(`${this.apiUrl}/recycle-bins`);
   }
 }

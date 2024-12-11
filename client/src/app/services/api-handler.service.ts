@@ -9,6 +9,6 @@ export class ApiHandlerService {
     }
 
     getRecyclingData(selectedFilters: string[]) {
-        return this.httpClient.get<[]>(`${this.apiUrl}/recycle-bins?types[]=${selectedFilters.join(',')}`);
+        return this.httpClient.get<[]>(`${this.apiUrl}/recycle-bins?${(selectedFilters.map((filter) => `types[]=${filter}`)).join('&')}`);
     }
 }

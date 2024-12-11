@@ -4,12 +4,12 @@ import { Observable } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class ApiHandlerService {
-  private apiUrl = 'http://localhost:3000';
+    private apiUrl = 'http://localhost:3000';
 
-  constructor(private httpClient: HttpClient) {
-  }
+    constructor(private httpClient: HttpClient) {
+    }
 
-  getRecyclingData(): Observable<any[]> {
-    return this.httpClient.get<any[]>(`${this.apiUrl}/recycle-bins`);
-  }
+    getRecyclingData(selectedFilters: string[]) {
+        return this.httpClient.get<[]>(`${this.apiUrl}/recycle-bins?types[]=${selectedFilters.join(',')}`);
+    }
 }

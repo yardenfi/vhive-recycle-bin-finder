@@ -4,6 +4,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonModule} from '@angular/material/button';
 import {NgForOf} from '@angular/common';
+import { ApiHandlerService } from '../services/api-handler.service';
 
 @Component({
   selector: 'app-recycling-sidebar',
@@ -26,6 +27,11 @@ import {NgForOf} from '@angular/common';
 })
 export class RecyclingSidebarComponent {
   @Output() filtersSubmit: EventEmitter<string[]> = new EventEmitter();
+
+  constructor(private apiHandlerService: ApiHandlerService) {
+
+    this.apiHandlerService.getRecyclingData().subscribe(console.log);
+  }
 
   recyclingFilters = [
     {name: 'Paper', selected: false},

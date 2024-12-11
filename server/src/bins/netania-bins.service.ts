@@ -10,32 +10,23 @@ export class NetaniaBinsService {
     this.loadBins();
   }
 
-  binTypeMapping: Record<string, BinType> = {
+  rawBinTypeToBinTypeMapping: Record<string, BinType> = {
     'מיכלי זכוכית': BinType.Glass,
     'מיכלי נייר': BinType.Paper,
   };
 
   // 'מיכלי בקבוקים',
-  // 'בריכות ציבוריות',
-  // 'תחנת דלק',
-  // 'מפעלים מסוכנים',
-  // 'מתקנים מבוקרים',
-  // ,
   // 'מיכלי טקסטיל',
-  // ,
-  // 'צוברי גז',
-  // 'אתרים עם קרינה',
-  // 'טמוני קרקע',
-  // 'אתרי דגירת יתושים'
-  hebrewTypes = new Set(Object.keys(this.binTypeMapping));
+
+  rawBinTypes = new Set(Object.keys(this.rawBinTypeToBinTypeMapping));
 
   loadBins(): Bin[] {
     return netaniaBins.features
       .map(({ geometry, properties }) => ({ geometry, properties }))
-      .filter(({ properties }) => this.hebrewTypes.has(properties.theme_desc))
+      .filter(({ properties }) => this.rawBinTypes.has(properties.theme_desc))
       .map((rawBin) => ({
         location: rawBin.geometry as any,
-        type: this.binTypeMapping[rawBin.properties.theme_desc],
+        type: this.rawBinTypeToBinTypeMapping[rawBin.properties.theme_desc],
       }));
   }
 }
